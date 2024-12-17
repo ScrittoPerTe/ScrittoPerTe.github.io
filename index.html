@@ -51,61 +51,145 @@
 							<p>Per ora siamo in quattro a scrivere le lettere a mano, vieni a conoscerci </p>
 						</div>
 
-						<!-- Gallery -->
-<div class="gallery style2 medium lightbox onscroll-fade-in">
-    <article>
-        <a href="images/gallery/fulls/01.jpg" class="image">
-            <img src="images/nicola.jpg" alt="" />
-        </a>
-        <div class="caption">
-            <h3>Nicola</h3>
-            <p>Ciao, mi chiamo Nicola, ho 27 anni, e sono un tipo intraprendente, curioso e socievole.</p>
-            <ul class="actions fixed">
-                <li><a href="nicola.html" class="button small">Dettagli</a></li>
-            </ul>
-        </div>
-    </article>
+						    <!-- Stile CSS -->
+    <style>
+        .slide img {
+    width: 35%;       /* Occupa l'intera larghezza della slide */
+    height: 400px;     /* Altezza fissa per tutte le immagini */
+    object-fit: cover; /* Ritaglia l'immagine mantenendo le proporzioni */
+    display: block;    /* Evita spazi indesiderati */
+    margin: 0 auto;    /* Centra l'immagine */
+}
 
-    <article>
-        <a href="images/gallery/fulls/02.jpg" class="image">
-            <img src="images/donatella.jpg" alt="" />
-        </a>
-        <div class="caption">
-            <h3>Donatella</h3>
-            <p>Mi chiamo Donatella, mi piace leggere, scrivere poesie, aiutare le persone, ascoltare...</p>
-            <ul class="actions fixed">
-                <li><a href="donatella.html" class="button small">Dettagli</a></li>
-            </ul>
-        </div>
-    </article>
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
 
-    <article>
-        <a href="images/gallery/fulls/03.jpg" class="image">
-            <img src="images/stella.jpg" alt="" />
-        </a>
-        <div class="caption">
-            <h3>Stella</h3>
-            <p>Ciao, mi chiamo Stella. Ho 26 anni e mi piace dedicare il tempo libero ad attività manuali e creative come il lavoro all’uncinetto e talvolta la pittura, ma la cosa che amo di più è semplicemente passare del tempo nella natura.</p>
-            <ul class="actions fixed">
-                <li><a href="stella.html" class="button small">Dettagli</a></li>
-            </ul>
-        </div>
-    </article>
+        .slider {
+            display: flex;
+            transition: transform 1s ease-in-out;
+        }
 
-    <article>
-        <a href="images/gallery/fulls/04.jpg" class="image">
-            <img src="images/orazio.jpg" alt="" />
-        </a>
-        <div class="caption">
-            <h3>Orazio</h3>
-            <p>Ciao, mi chiamo Orazio, felicemente sposato, ho tre figli e tre adorabili nipotine, mi piace la natura, passeggiare specialmente in montagna.</p>
-            <ul class="actions fixed">
-                <li><a href="orazio.html" class="button small">Dettagli</a></li>
-            </ul>
-        </div>
-    </article>
-</div>
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
 
+        .slide img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .caption {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Slider con Link</title>
+        <!-- Stile CSS -->
+        <style>
+            .slider-container {
+                width: 100%;
+                overflow: hidden;
+                position: relative;
+            }
+    
+            .slider {
+                display: flex;
+                transition: transform 1s ease-in-out;
+            }
+    
+            .slide {
+                min-width: 100%;
+                box-sizing: border-box;
+                text-align: center;
+            }
+    
+            .slide img {
+                width: 35%;         /* Adatta l'immagine */
+                height: 400px;      /* Altezza uniforme */
+                object-fit: cover;  /* Ritaglia mantenendo proporzioni */
+                display: block;
+                margin: 0 auto;
+            }
+    
+            .caption {
+                padding: 10px;
+            }
+    
+            .caption h3 a {
+                text-decoration: none;
+                color: #333; /* Colore del testo */
+                transition: color 0.3s ease;
+            }
+    
+            .caption h3 a:hover {
+                color: #007BFF; /* Colore al passaggio del mouse */
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Slider Section -->
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide">
+                    <img src="images/nicola.jpg" alt="Nicola" />
+                    <div class="caption">
+                        <h3><a href="nicola.html">Nicola</a></h3>
+                        <p>Ciao, mi chiamo Nicola, ho 27 anni, e sono un tipo intraprendente, curioso e socievole.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/donatella.jpg" alt="Donatella" />
+                    <div class="caption">
+                        <h3><a href="donatella.html">Donatella</a></h3>
+                        <p>Mi chiamo Donatella, mi piace leggere, scrivere poesie, aiutare le persone, ascoltare...</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/stella.jpg" alt="Stella" />
+                    <div class="caption">
+                        <h3><a href="stella.html">Stella</a></h3>
+                        <p>Ciao, mi chiamo Stella. Ho 26 anni e mi piace dedicare il tempo libero ad attività manuali e creative come il lavoro all’uncinetto e talvolta la pittura.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="images/orazio.jpg" alt="Orazio" />
+                    <div class="caption">
+                        <h3><a href="orazio.html">Orazio</a></h3>
+                        <p>Ciao, mi chiamo Orazio, felicemente sposato, ho tre figli e tre adorabili nipotine, mi piace la natura, passeggiare specialmente in montagna.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Script JavaScript -->
+        <script>
+            let currentSlide = 0;
+    
+            function showSlides() {
+                const slides = document.querySelectorAll(".slide");
+                const slider = document.querySelector(".slider");
+    
+                currentSlide = (currentSlide + 1) % slides.length; // Vai alla slide successiva
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }
+    
+            setInterval(showSlides, 3000); // Cambia slide ogni 3 secondi
+        </script>
+    </body>
+    </html>
+    
 				<!-- Six -->
 					<section class="wrapper style1 align-center">
 						<div class="inner">
@@ -172,13 +256,9 @@
 					<footer class="wrapper style1 align-center">
 						<div class="inner">
 							<ul class="icons">
-								<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-								<li><a href="#" class="icon style2 fa-envelope"><span class="label">Email</span></a></li>
+								<li><a href="mailto:lettere@scrittoperte.org" class="icon style2 fa-envelope"><span class="label">Email</span></a></li>
 							</ul>
-							<p>&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+							<p>Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
 						</div>
 					</footer>
 
