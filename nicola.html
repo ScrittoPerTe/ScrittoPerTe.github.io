@@ -56,6 +56,8 @@
     </div>
 </section>
 
+
+
 <!-- Three -->
 <section id="three">
     <h2>Contattaci</h2>
@@ -64,23 +66,16 @@
         <div class="col-8 col-12-small">
             <form id="contactForm">
                 <div class="row gtr-uniform gtr-50">
-                    <div class="col-6 col-12-xsmall">
-                        <input type="text" name="name" id="name" placeholder="Nome" required />
-                    </div>
-                    <div class="col-6 col-12-xsmall">
-                        <input type="email" name="email" id="email" placeholder="Email" required />
-                    </div>
-                    <div class="col-12">
-                        <textarea name="message" id="message" placeholder="Messaggio" rows="4" required></textarea>
-                    </div>
+                    <div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Nome" required /></div>
+                    <div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" required /></div>
+                    <div class="col-12"><textarea name="message" id="message" placeholder="Messaggio" rows="4" required></textarea></div>
+                    <!-- Campo nascosto per Owner -->
+                    <input type="hidden" name="owner" id="owner" value="Nicola" />
                 </div>
                 <ul class="actions">
-                    <li>
-                        <button type="submit" class="button">Invia messaggio</button>
-                    </li>
+                    <li><button type="button" id="submitButton">Invia messaggio</button></li>
                 </ul>
             </form>
-            <div id="responseMessage" style="margin-top: 15px; color: green;"></div>
         </div>
         <div class="col-4 col-12-small">
             <ul class="labeled-icons">
@@ -98,38 +93,47 @@
 </section>
 
 <script>
-    document.querySelector("#contactForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const responseDiv = document.querySelector("#responseMessage");
+    document.getElementById('submitButton').addEventListener('click', function () {
+        // Raccogli i dati del modulo
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+        const owner = document.getElementById('owner').value;
 
+        // Controlla che tutti i campi siano compilati
+        if (!name || !email || !message) {
+            alert("Compila tutti i campi!");
+            return;
+        }
+
+        // Crea il payload da inviare
+        const payload = {
+            name: name,
+            email: email,
+            message: message,
+            owner: owner
+        };
+
+        // Invia i dati al Google Apps Script
         fetch("https://script.google.com/macros/s/AKfycbzU9LM7ikgCJUDWmReIJTF2JFe4tj9aMtuCaLJ2SmFWfsxw42N6Mfn-aaVcebyq4VKc/exec", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                name: formData.get("name"),
-                email: formData.get("email"),
-                message: formData.get("message")
-            })
+            body: JSON.stringify(payload)
         })
-        .then(response => {
-            if (response.ok) {
-                responseDiv.textContent = "Messaggio inviato con successo!";
-                responseDiv.style.color = "green";
-                event.target.reset(); // Resetta il modulo
-            } else {
-                responseDiv.textContent = "Errore durante l'invio, riprova.";
-                responseDiv.style.color = "red";
-            }
+        .then(response => response.text())
+        .then(data => {
+            alert("Messaggio inviato con successo!");
+            document.getElementById('contactForm').reset();
         })
-        .catch(() => {
-            responseDiv.textContent = "Errore durante l'invio, riprova.";
-            responseDiv.style.color = "red";
+        .catch(error => {
+            console.error("Errore nell'invio:", error);
+            alert("C'è stato un errore. Riprova più tardi.");
         });
     });
 </script>
+
 
 		<!-- Footer -->
 			<footer id="footer">
