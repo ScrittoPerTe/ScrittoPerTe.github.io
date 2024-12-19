@@ -56,42 +56,80 @@
     </div>
 </section>
 
+<!-- Three -->
+<section id="three">
+    <h2>Contattaci</h2>
+    <p>Contattaci da Whatsapp, scrivendoci un'email, o direttamente compilando il forum.</p>
+    <div class="row">
+        <div class="col-8 col-12-small">
+            <form id="contactForm">
+                <div class="row gtr-uniform gtr-50">
+                    <div class="col-6 col-12-xsmall">
+                        <input type="text" name="name" id="name" placeholder="Nome" required />
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                        <input type="email" name="email" id="email" placeholder="Email" required />
+                    </div>
+                    <div class="col-12">
+                        <textarea name="message" id="message" placeholder="Messaggio" rows="4" required></textarea>
+                    </div>
+                </div>
+                <ul class="actions">
+                    <li>
+                        <button type="submit" class="button">Invia messaggio</button>
+                    </li>
+                </ul>
+            </form>
+            <div id="responseMessage" style="margin-top: 15px; color: green;"></div>
+        </div>
+        <div class="col-4 col-12-small">
+            <ul class="labeled-icons">
+                <li>
+                    <h3 class="icon solid fa-mobile-alt"><span class="label">Phone</span></h3>
+                    <a href="https://wa.me/393278427660">327 842 7660</a>
+                </li>
+                <li>
+                    <h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
+                    <a href="mailto:nicola@scrittoperte.org">Nicola@scrittoperte.org</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
 
+<script>
+    document.querySelector("#contactForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const responseDiv = document.querySelector("#responseMessage");
 
-				<!-- Three -->
-					<section id="three">
-						<h2>Contattaci</h2>
-						<p>Contattaci da Whatsapp, scrivendoci un'email, o direttamente compilando il forum.</p>
-						<div class="row">
-							<div class="col-8 col-12-small">
-								<form method="post" action="#">
-									<div class="row gtr-uniform gtr-50">
-										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Nome" /></div>
-										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>
-										<div class="col-12"><textarea name="message" id="message" placeholder="Messaggio" rows="4"></textarea></div>
-									</div>
-								</form>
-								<ul class="actions">
-									<li><input type="submit" value="Invia messaggio" /></li>
-								</ul>
-							</div>
-							<div class="col-4 col-12-small">
-								<ul class="labeled-icons">
-									
-									<li>
-										<h3 class="icon solid fa-mobile-alt"><span class="label">Phone</span></h3>
-										<a href="https://wa.me/393278427660">327 842 7660</a>
-									</li>
-									<li>
-										<h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
-										<a href="mailto:nicola@scrittoperte.org">Nicola@scrittoperte.org</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</section>
-
-			</div>
+        fetch("https://script.google.com/macros/s/AKfycbzU9LM7ikgCJUDWmReIJTF2JFe4tj9aMtuCaLJ2SmFWfsxw42N6Mfn-aaVcebyq4VKc/exec", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: formData.get("name"),
+                email: formData.get("email"),
+                message: formData.get("message")
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                responseDiv.textContent = "Messaggio inviato con successo!";
+                responseDiv.style.color = "green";
+                event.target.reset(); // Resetta il modulo
+            } else {
+                responseDiv.textContent = "Errore durante l'invio, riprova.";
+                responseDiv.style.color = "red";
+            }
+        })
+        .catch(() => {
+            responseDiv.textContent = "Errore durante l'invio, riprova.";
+            responseDiv.style.color = "red";
+        });
+    });
+</script>
 
 		<!-- Footer -->
 			<footer id="footer">
