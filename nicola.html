@@ -36,7 +36,7 @@
 							Grazie a Dio ho modo di attraversare i momenti difficili tramite i doni che mi ha elargito:
 							l’empatia di Gesù nei miei confronti, l’amore della mia famiglia, la salute a volte rara di questi
 							tempi e i consigli degli amici fedeli.
-							Ti lascio con un versetto e il mio numero così puoi scrivermi su Whatsapp <a href="https://wa.me/393278427660">327 842 7660</a>.
+							Ti lascio con un versetto e il mio numero così puoi scrivermi su Whatsapp <a href="https://wa.me/393278427660">327 842 7660</a> o anche sulla mail <a href='mailto:Nicola@scrittoperte.org'>Nicola@scrittoperte.org</a>.
 							“Chiedete e vi sarà dato; cercate e troverete; bussate e vi sarà aperto; perché chiunque
 							chiede riceve, e chi cerca trova e a chi bussa sarà aperto”.
 							Matteo 7 : 7-8 </h3>
@@ -46,8 +46,7 @@
 
 				<!-- Two -->
 <section id="two">
-    <h2>Recent Work</h2>
-    <!-- Linee di separazione (puoi personalizzare questo stile con CSS) -->
+    <h2>Video</h2>
     <div class="row">
         <article class="col-12">
             <!-- Embed del video di YouTube -->
@@ -57,82 +56,6 @@
 </section>
 
 
-
-<!-- Three -->
-<section id="three">
-    <h2>Contattaci</h2>
-    <p>Contattaci da Whatsapp, scrivendoci un'email, o direttamente compilando il forum.</p>
-    <div class="row">
-        <div class="col-8 col-12-small">
-            <form id="contactForm">
-                <div class="row gtr-uniform gtr-50">
-                    <div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Nome" required /></div>
-                    <div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" required /></div>
-                    <div class="col-12"><textarea name="message" id="message" placeholder="Messaggio" rows="4" required></textarea></div>
-                    <!-- Campo nascosto per Owner -->
-                    <input type="hidden" name="owner" id="owner" value="Nicola" />
-                </div>
-                <ul class="actions">
-                    <li><button type="button" id="submitButton">Invia messaggio</button></li>
-                </ul>
-            </form>
-        </div>
-        <div class="col-4 col-12-small">
-            <ul class="labeled-icons">
-                <li>
-                    <h3 class="icon solid fa-mobile-alt"><span class="label">Phone</span></h3>
-                    <a href="https://wa.me/393278427660">327 842 7660</a>
-                </li>
-                <li>
-                    <h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
-                    <a href="mailto:nicola@scrittoperte.org">Nicola@scrittoperte.org</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<script>
-    document.getElementById('submitButton').addEventListener('click', function () {
-        // Raccogli i dati del modulo
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
-        const owner = document.getElementById('owner').value;
-
-        // Controlla che tutti i campi siano compilati
-        if (!name || !email || !message) {
-            alert("Compila tutti i campi!");
-            return;
-        }
-
-        // Crea il payload da inviare
-        const payload = {
-            name: name,
-            email: email,
-            message: message,
-            owner: owner
-        };
-
-        // Invia i dati al Google Apps Script
-        fetch("https://script.google.com/macros/s/AKfycbzU9LM7ikgCJUDWmReIJTF2JFe4tj9aMtuCaLJ2SmFWfsxw42N6Mfn-aaVcebyq4VKc/exec", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(response => response.text())
-        .then(data => {
-            alert("Messaggio inviato con successo!");
-            document.getElementById('contactForm').reset();
-        })
-        .catch(error => {
-            console.error("Errore nell'invio:", error);
-            alert("C'è stato un errore. Riprova più tardi.");
-        });
-    });
-</script>
 
 
 		<!-- Footer -->

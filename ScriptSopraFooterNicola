@@ -1,0 +1,63 @@
+				<!-- Six -->
+					<section class="wrapper style1 align-center">
+						<div class="inner">
+							<h2>Contattaci</h2>
+							<p>Se la lettera ti ha ispirato e hai voglia di conoscerci meglio, non esitare a scriverci!</p>
+						</div>
+					</section>
+
+				<form id="contactForm">
+    <div class="fields">
+        <div class="field half">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required />
+        </div>
+        <div class="field half">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required />
+        </div>
+        <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="6" required></textarea>
+        </div>
+    </div>
+    <ul class="actions special">
+        <li><button type="submit" class="button">Send Message</button></li>
+    </ul>
+</form>
+
+<div id="responseMessage" style="margin-top: 15px; color: green;"></div>
+
+<script>
+    document.querySelector("#contactForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const responseDiv = document.querySelector("#responseMessage");
+
+        fetch("https://script.google.com/macros/s/AKfycbzizHTNSbuVmIsYurCFiQAqGFTAl1sCoBB7yFq3TQyPpeKQZqjE4xuiJqtDVaCrqNJF/exec", {
+            method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        name: formData.get("name"),
+        email: formData.get("email"),
+        message: formData.get("message")
+    })
+})
+        .then(response => {
+            if (response.ok) {
+                responseDiv.textContent = "Messaggio inviato con successo!";
+                responseDiv.style.color = "green";
+                event.target.reset(); // Resetta il modulo
+            } else {
+                responseDiv.textContent = "Errore durante l'invio, riprova.";
+                responseDiv.style.color = "red";
+            }
+        })
+        .catch(() => {
+            responseDiv.textContent = "Errore durante l'invio, riprova.";
+            responseDiv.style.color = "red";
+        });
+    });
+</script>
