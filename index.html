@@ -12,6 +12,74 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+        <style>
+            /* Video overlay on banner image */
+            .banner .image{ position: relative; overflow: hidden; }
+            .banner .image img{ display:block; width:100%; height:auto; }
+            .banner-overlay-video{
+                position: absolute;
+                right: 0.5cm;
+                bottom: 0.5cm;
+                height: 50%;
+                width: auto;
+                z-index: 2;
+                object-fit: cover;
+                border-radius: 6px;
+                box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+            }
+            /* Play/unmute button overlay */
+            .video-play-button{
+                position: absolute;
+                right: 0.7cm;
+                bottom: 0.7cm;
+                z-index: 3;
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                border: none;
+                background: rgba(0,0,0,0.6);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            }
+            .video-play-button:focus{ outline: 2px solid #fff; }
+            /* Large center play button */
+            .video-play-overlay{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 4;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                border: none;
+                background: rgba(255,255,255,0.9);
+                color: #000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 40px;
+                cursor: pointer;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+                transition: background 0.3s ease;
+            }
+            .video-play-overlay:hover{ background: rgba(255,255,255,1); }
+            /* Mobile: keep video smaller and readable */
+            @media (max-width: 768px){
+                .banner-overlay-video{ right: 0.6rem; bottom: 0.6rem; height: 30%; max-height: 140px; }
+                .video-play-button{ right: 0.8rem; bottom: 0.8rem; width:40px; height:40px; }
+            }
+            @media (max-width: 420px){
+                .banner-overlay-video{ right: 0.5rem; bottom: 0.5rem; height: 28%; max-height: 110px; }
+                .video-play-button{ right: 0.6rem; bottom: 0.6rem; width:36px; height:36px; font-size:16px }
+            }
+        </style>
+
         <!-- Favicon tradizionale (per la maggior parte dei browser desktop) -->
         <link rel="icon" href="favicon.ico" type="image/x-icon">
         
@@ -42,9 +110,21 @@
                             <p class="major" style="font-size: 50px;">Siamo un gruppo di amici uniti dalla volontà di condividere con gli altri la gioia ricevuta incontrando il Signore lungo la propria vita</p>
 
 						</div>
-						<div class="image">
-							<img src="images/banner.jpg" alt="" />
-						</div>
+                        <div class="image">
+                            <img src="images/banner.jpg" alt="" />
+                            <!-- Wrapper per video e pulsante -->
+                            <div style="position: absolute; right: 0.5cm; bottom: 0.5cm; height: 50%; width: auto; z-index: 2;">
+                                <video id="homeOverlayVideo" class="banner-overlay-video" muted loop playsinline preload="auto" poster="assets/images/poster.jpg" style="position: static; height: 100%; width: auto; display: block;">
+                                    <!-- Usa il file fornito dall'utente (attenzione agli spazi nel nome) -->
+                                    <source src="video/Video%20home.mp4" type="video/mp4">
+                                    Il tuo browser non supporta il video.
+                                </video>
+                                <!-- Pulsante play grande centrato sul video -->
+                                <button id="videoPlayOverlay" class="video-play-overlay" aria-label="Avvia video" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 4;">▶</button>
+                                <!-- Pulsante mute in basso a destra -->
+                                <button id="videoPlayBtn" class="video-play-button" aria-label="Disabilita audio" style="display:none; position: absolute; right: 0; bottom: 0; z-index: 5;">🔊</button>
+                            </div>
+                        </div>
 					</section>
 
 				<!-- Two -->
@@ -233,6 +313,21 @@
                 </a>
             </div>
         </div>
+		<div class="slide">
+            <img src="images/Monja.jpeg" alt="Monja" />
+            <div class="caption">
+                <h3 style="font-size: 60px;"><a href="monja.html">Monja</a></h3>
+                <p style="font-size: 40px;">Inserire descrizione</p>
+                <a href="monja.html">
+                    <button class="button">
+                        <span class="text">Scopri</span>
+                        <span class="svg">
+                            <!-- SVG remains the same -->
+                        </span>
+                    </button>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -274,6 +369,42 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+            <!-- Avvia il video overlay solo dopo il caricamento completo della pagina -->
+            <script>
+            window.addEventListener('load', function() {
+                var v = document.getElementById('homeOverlayVideo');
+                var playBtn = document.getElementById('videoPlayOverlay');
+                var muteBtn = document.getElementById('videoPlayBtn');
+                if (!v || !playBtn) return;
+                // Click sul grande pulsante play: avvia il video con audio
+                playBtn.addEventListener('click', function(e){
+                    e.stopPropagation();
+                    v.muted = false;
+                    v.volume = 1.0;
+                    var playPromise = v.play();
+                    if(playPromise !== undefined){
+                        playPromise.then(function(){
+                            console.log('Video riprodotto con successo');
+                        }).catch(function(err){
+                            console.log('Play fallito:', err);
+                        });
+                    }
+                    playBtn.style.display = 'none';
+                    muteBtn.style.display = 'flex';
+                });
+                // Pulsante mute/unmute in basso a destra
+                var isMuted = false;
+                if(muteBtn){
+                    muteBtn.addEventListener('click', function(e){
+                        e.stopPropagation();
+                        isMuted = !isMuted;
+                        v.muted = isMuted;
+                        this.textContent = isMuted ? '🔇' : '🔊';
+                        this.setAttribute('aria-label', isMuted ? 'Abilita audio' : 'Disabilita audio');
+                    });
+                }
+            });
+            </script>
 
 	</body>
 </html>
