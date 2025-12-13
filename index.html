@@ -196,13 +196,21 @@
 						    <!-- Stile CSS -->
     <style>
         .slide img {
-    width: 35%;       /* Occupa l'intera larghezza della slide */
-    height: 400px;     /* Altezza fissa per tutte le immagini */
-    object-fit: cover; /* Ritaglia l'immagine mantenendo le proporzioni */
-    display: block;    /* Evita spazi indesiderati */
-    margin: 0 auto;    /* Centra l'immagine */
+			width: 35%;
+			height: 400px;
+			object-fit: cover;
+			display: block;
+			margin: 0 auto;
+			border-radius: 50%;
 }
 
+@media screen and (max-width: 736px) {
+    .slide img {
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+    }
+}
         .slider-container {
             width: 100%;
             overflow: hidden;
@@ -221,70 +229,23 @@
             text-align: center;
         }
 
-        .slide img {
-            max-width: 100%;
-            height: auto;
-        }
-
         .caption {
             padding: 10px;
         }
+
+        .caption h3 a {
+            text-decoration: none;
+            color: #333; /* Colore del testo */
+            transition: color 0.3s ease;
+        }
+
+        .caption h3 a:hover {
+            color: #007BFF; /* Colore al passaggio del mouse */
+        }
     </style>
-</head>
-<body>
-    <!DOCTYPE html>
-    <html lang="it">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Slider con Link</title>
-        <!-- Stile CSS -->
-        <style>
-            .slider-container {
-                width: 100%;
-                overflow: hidden;
-                position: relative;
-            }
-    
-            .slider {
-                display: flex;
-                transition: transform 1s ease-in-out;
-            }
-    
-            .slide {
-                min-width: 100%;
-                box-sizing: border-box;
-                text-align: center;
-            }
-    
-            .slide img {
-                width: 35%;         /* Adatta l'immagine */
-                height: 400px;      /* Altezza uniforme */
-                object-fit: cover;  /* Ritaglia mantenendo proporzioni */
-                display: block;
-                margin: 0 auto;
-            }
-    
-            .caption {
-                padding: 10px;
-            }
-    
-            .caption h3 a {
-                text-decoration: none;
-                color: #333; /* Colore del testo */
-                transition: color 0.3s ease;
-            }
-    
-            .caption h3 a:hover {
-                color: #007BFF; /* Colore al passaggio del mouse */
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Slider Section -->
-        <!-- Slider Section -->
-<div class="slider-container">
-    <div class="slider">
+						        <!-- Slider Section -->
+						<div class="slider-container">
+						    <div class="slider">
         <div class="slide">
             <img src="images/nicola.jpg" alt="Nicola" />
             <div class="caption">
@@ -364,7 +325,7 @@
             <img src="images/Monja.jpeg" alt="Monja" />
             <div class="caption">
                 <h3 style="font-size: 60px;"><a href="monja.html">Monja</a></h3>
-                <p style="font-size: 40px;">Ciao, sono Monja, le mie figlie e mio marito sono la parte più preziosa del mio mondo.</p>
+                <p style="font-size: 40px;">Ciao, sono Monja, mi affascina il confronto aperto e sincero: è una bella occasione di crescita.</p>
                 <a href="monja.html">
                     <button class="button">
                         <span class="text">Scopri</span>
@@ -382,19 +343,50 @@
         <!-- Script JavaScript -->
         <script>
             let currentSlide = 0;
-    
-            function showSlides() {
-                const slides = document.querySelectorAll(".slide");
-                const slider = document.querySelector(".slider");
-    
-                currentSlide = (currentSlide + 1) % slides.length; // Vai alla slide successiva
+            const slides = document.querySelectorAll(".slide");
+            const slider = document.querySelector(".slider");
+            let slideInterval;
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            function showSlide(index) {
+                if (index >= slides.length) {
+                    currentSlide = 0;
+                } else if (index < 0) {
+                    currentSlide = slides.length - 1;
+                } else {
+                    currentSlide = index;
+                }
                 slider.style.transform = `translateX(-${currentSlide * 100}%)`;
             }
-    
-            setInterval(showSlides, 3000); // Cambia slide ogni 3 secondi
+
+            function moveSlide(n) {
+                clearInterval(slideInterval);
+                showSlide(currentSlide + n);
+                slideInterval = setInterval(() => moveSlide(1), 3000);
+            }
+
+            slider.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            slider.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50) {
+                    moveSlide(1);
+                }
+
+                if (touchEndX > touchStartX + 50) {
+                    moveSlide(-1);
+                }
+            }
+
+            slideInterval = setInterval(() => moveSlide(1), 3000);
         </script>
-    </body>
-    </html>
 
 				<!-- Footer -->
 					<footer class="wrapper style1 align-center">
