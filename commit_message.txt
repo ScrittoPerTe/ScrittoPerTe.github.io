@@ -1,0 +1,3 @@
+feat: Add text sections to personal pages
+
+Adds a dedicated section for additional text content to the personal pages of Donatella, Massimo, Nicola, Orazio, and Stella. This section is placed after the video content and includes a placeholder for easy text insertion.
